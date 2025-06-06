@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legacy Orbs</title>
+  <link rel="stylesheet" href="../common-navbar.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: transparent;
+      font-family: sans-serif;
+    }
+
+    #background-video, #loop-video {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    #overlay-video {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      overflow: hidden;
+      object-fit: cover;
+      z-index: 1;
+      transition: opacity 1s ease;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: flat;
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
+
+    .ring:hover {
+      transform: scale(1.1) translate(-50%, -50%);
+    }
+
+    #ring1, #ring2 {
+      transform: translate(-50%, -50%);
+    }
+
+    .orb {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .orb:hover {
+      transform: scale(1.2);
+    }
+
+    .glass-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(15, 14, 14, 0.3);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      width: 300px;
+      color: white;
+      font-weight: bold;
+      display: none;
+      z-index: 3;
+    }
+    /* Glitchy glow animation */
+    @keyframes glitchyGlow {
+      0%, 100% {
+        box-shadow: 0 0 10px #9900ff, 0 0 30px #9900ff;
+        filter: hue-rotate(0deg);
+      }
+      25% {
+        box-shadow: 0 0 15px #9900ff, 0 0 40px #9900ff;
+        filter: hue-rotate(20deg);
+      }
+      50% {
+        box-shadow: 0 0 12px #9900ff, 0 0 35px #9900ff;
+        filter: hue-rotate(-20deg);
+      }
+      75% {
+        box-shadow: 0 0 18px #9900ff, 0 0 45px #9900ff;
+        filter: hue-rotate(10deg);
+      }
+    }
+
+    .orb, #overlay-video {
+      animation: glitchyGlow 3s infinite alternate;
+    }
+
+    /* Media query for smaller devices */
+    @media (max-width: 600px) {
+      .orb {
+        width: 50px;
+        height: 50px;
+      }
+      .glass-popup {
+        width: 200px;
+        padding: 15px;
+        font-size: 14px;
+      }
+      #background-video, #loop-video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<header class="apple-navbar">
+  <div class="notch">
+    <div class="logo">
+      <img src="../eventsv2.1/images/logo.png" alt="LA FEST Logo" />
+    </div>
+    <nav>
+      <a href="../eventsv2.1/index.html">HOME</a>
+      <a href="../eventsv2.1/index.html">EVENTS</a>
+      <a href="../rules v2/index.html">RULES</a>
+      <a href="legacyindex.html" class="active">LEGACY</a>
+      <a href="../contacts v4/contacts_updated.html">CONTACTS</a>
+    </nav>
+  </div>
+</header>
+<script>
+</script>
+  <video id="background-video" autoplay muted>
+    <source src="video/vid1.mp4" type="video/mp4">
+  </video>
+  <video id="loop-video" style="display:none;" autoplay muted loop>
+    <source src="video/vid2.mp4" type="video/mp4">
+  </video>
+
+  <div class="ring" id="ring1"></div>
+  <div class="ring" id="ring2"></div>
+
+  <video id="overlay-video" width="300" height="300" autoplay muted>
+    <source src="video/media.mp4" type="video/mp4">
+  </video>
+
+  <div class="glass-popup" id="popup">
+    <button id="backButton" style="background:#9900ff; border:none; color:white; padding:5px 10px; border-radius:5px; cursor:pointer; margin-bottom:10px; display:none;">Back</button>
+    <p id="popup-text">Orb Description</p>
+  </div>
+
+  <script>
+    const ring1 = document.getElementById('ring1');
+    const ring2 = document.getElementById('ring2');
+    const popup = document.getElementById('popup');
+    const popupText = document.getElementById('popup-text');
+    const overlayVideo = document.getElementById('overlay-video');
+    const bgVideo = document.getElementById('background-video');
+    const loopVideo = document.getElementById('loop-video');
+
+    // Detect if device is mobile
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+    // Set ring radius based on device
+    const ring1Radius = isMobile ? 140 : 350;
+    const ring2Radius = isMobile ? 90 : 260;
+
+    const descriptions = [
+      "2000: The century turned, and with it came a shift that would forever change its course, inviting the bold to break conventions and redefine norms. Step into this new chapter, where creativity knows no bounds and every idea has a chance to shine.",
+      "2001: When a dream met a purpose, unity took root in undaunted passion. Through motive, resolve, and spirit, the unforgettable was shaped. From the city's heart, a fest arose, etched by defiant hope. Thus the tale advances, endlessly fuelled by the fire of creation.",
+      "2002: Harness the energy of a new generation. Reach beyond the ephemeral and claim the boundless. Embrace the unknown, and let every ambition spark the fire that changes the narrative and reshapes tomorrow.",
+      "2003: Where aptitudes soar and hearts string together. Reminisce what was carved into one's very soul and witness it rise, evolving into a power that echoes through the ages, leaving an indelible mark on everything it touches.",
+      "2004: Imagine beyond horizons. Shatter the limits. Leave the familiar behind and carve your name among the stars. Step into the endless flow, where every moment leaves an indelible mark, and every dream shapes the universe.",
+      "2005: What began as a collective dream evolved into a vibrant force, reshaping the city’s creative landscape. Driven by the passion of its innovators, it stands unwavering, crowned by determination. Now, it awakens once more, ready to unfold, filled with the possibilities of what is yet to come?",
+      "2006: Awaken and unleash the unthinkable. Unbind, untie, and unravel the perpetual. Let every second burst with potential and make every trial a conquest.  In this boundless realm, we make no compromises.",
+      "2007: Echoed with tribute and triumph, a spirit forever ignites the fest’s soul. Every shared breath, every spark of excellence, lives on in memory. Now we carry that fire forward to fresh challenges, new dreams waiting to unfold. The next chapter begins with you. Will you join us and light the way?",
+      "2008:The old hall’s lights fade, it’s cheers now nothing more than echoes in the air. Yet, with every ending, a new beginning awakens. A new arena rises, its walls set to tremble with the clash of battles and the roar of glory. The story continues. Will you write your part?",
+      "2009:When the Indoor Stadium's arches first embraced ambition, legends awoke. Heroes forged their tales, each victory etching myth into history itself. Now the stage lies quiet yet waiting, daring the next to rise and carve their name among the immortals.",
+      "2010: Relive the day. Relive the art. Relive awesomeness. Relive the art of waging wars on stage. Relive LA Fest 2010, where there was life in every art.",
+      "2011: 16 years down the line, the legacy continues… LA Fest the first ever inter-school fest still holds an enviable position even in the face of present day stiff competition.",
+      "2012: An idea to create something new… Something that would change the face of humanity in Trivandrum… An idea to bring Life and Arts together in an ethereal melting pot of talent…",
+      "2013: The meticulous craftsmanship of 17 long years. A fusillade of sheer ingenuity that tugs at your heartstrings and astounds with its aesthetic appeal. We provide the plot. Unravel your story in our theatre of dreams.",
+      "2014: Empires aren't built in a day but legacy is made in one. A legacy of 18 has come to pass. Now the stars are realigning. Be a part of the supernova.",
+      "2015: As the heavens stand still and the gates to Arcadia open… Experience the twentieth chapter of the eternal saga which celebrates the art of life.",
+      "2016: The prophecy written by the ancients two decades ago has come to pass. The wheels of the celestial machinery have ever since been spinning… churning out champions. It is time to inscribe your name in the hall of legends.",
+      "2017: The LA Fest that never got the chance to show itself, but still was the source of inspiration for many a loyolite of the batch of 2018 and beyond. Their efforts did not go unseen…",
+      "1997: At the heart of LA Fest, the Nataraja dances—a flame where time and art entwine. Trophies fade into fable, and each leap is a stilled story. Yet the rhythm calls, and dreamers rise, drawn to shape their fate. Will you answer the call of this endless dance?",
+      "1998: Envision, dare, and revere beyond the limits. Transcend the familiar, and shape what is destined to shine among the stars. Step into the endless flow, where every instant becomes a mark of greatness and where every fantasy shapes the cosmos.",
+      "1999: Pulse wild. Burn bright. Set the measure—and let it shatter. Tame the storm and let your echoes carve the infinite, where every beat marks a beginning and every spark leaves a scar on the sky. Rise, and let your moments ripple through the tides of time, forging a bequest that never fades.",
+      "1996: What began as a spark in the hearts of a few ignited a tradition. A dream of a stage where talents could shine, voices could rise, and the youth could find the arc of brilliance. Together, we carve every moment into history.",
+      "2022 : The Colosseum reopens after an interlude of VI years. Here the fight isn’t over till only the winner stands. New heroes will rise as the giants fall, who will guide their legions to ultimate glory?",
+      "2023 : The Matrix has awakened and calls for the valiant. Immortalise your art with ardour. The quest for glory awaits you. Behold, the 23rd iteration of Life and Arts.",
+      "2024: The wheels of tradition turn once more. Etch your name in our legacy, for in this utopia, your flaws are your weapons. Glory be to life. Glory be to arts. Triumph awaits its encore."
+    ];
+
+    function createOrbs(ring, count, radius, clockwise = true, startIndex = 1) {
+      const centerX = 0;
+      const centerY = 0;
+      for (let i = 0; i < count; i++) {
+        const orbElement = document.createElement('img');
+        orbElement.src = `images/${startIndex + i}.png`;
+        orbElement.className = 'orb';
+        orbElement.style.opacity = '0';
+        const angle = (i / count) * 2 * Math.PI;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        orbElement.style.left = `calc(50% + ${x}px - 30px)`;
+        orbElement.style.top = `calc(50% + ${y}px - 30px)`;
+        orbElement.dataset.index = i;
+        orbElement.style.pointerEvents = 'auto';
+        orbElement.onclick = () => {
+          // Animate orb enlargement
+          orbElement.style.transition = 'transform 0.5s ease';
+          orbElement.style.transform = 'scale(3)';
+          setTimeout(() => {
+            popupText.textContent = descriptions[startIndex + i];
+            popup.style.display = 'block';
+            backButton.style.display = 'inline-block';
+            orbElement.style.display = 'none';
+            // Fix background shaking by disabling pointer events on background video
+            bgVideo.style.pointerEvents = 'none';
+          }, 500);
+        };
+        ring.appendChild(orbElement);
+      }
+      // Reveal orbs one by one
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          ring.children[i].style.transition = 'opacity 1s ease';
+          ring.children[i].style.opacity = '1';
+        }, i * 1500);
+      }
+
+      let angle = 0;
+      function animate() {
+        angle += clockwise ? 0.5 : -0.5;
+        const children = ring.children;
+        for (let i = 0; i < children.length; i++) {
+          const orb = children[i];
+          const baseAngle = (i / count) * 2 * Math.PI + angle * Math.PI / 180;
+          const x = radius * Math.cos(baseAngle);
+          const y = radius * Math.sin(baseAngle);
+          orb.style.left = `calc(50% + ${x}px - 30px)`;
+          orb.style.top = `calc(50% + ${y}px - 30px)`;
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    ring1.innerHTML = '';
+    ring2.innerHTML = '';
+    if (isMobile) {
+      createOrbs(ring1, 13, 120, true, 0);
+      createOrbs(ring2, 12, 90, false, 13);
+      overlayVideo.width = 150;
+      overlayVideo.height = 150;
+    } else {
+      createOrbs(ring1, 13, 320, true, 0);
+      createOrbs(ring2, 12, 240, false, 13);
+      const innerRingRadius = 240;
+      const videoDiameter = innerRingRadius * 2 * 0.8; // 80% of inner ring diameter
+      overlayVideo.width = videoDiameter;
+      overlayVideo.height = videoDiameter;
+    }
+
+    // Handle background video
+    bgVideo.onended = () => {
+      bgVideo.style.display = 'none';
+      loopVideo.style.display = 'block';
+      loopVideo.play();
+    };
+
+    // Handle center media video with fade in and fade out
+    function playCenterMedia() {
+      overlayVideo.style.display = 'block';
+      overlayVideo.style.opacity = 0;
+      overlayVideo.style.transition = 'opacity 2s ease';
+      // Trigger fade in
+      requestAnimationFrame(() => {
+        overlayVideo.style.opacity = 1;
+      });
+      overlayVideo.play();
+      overlayVideo.onended = () => {
+        overlayVideo.style.opacity = 0;
+        setTimeout(() => {
+          overlayVideo.style.display = 'none';
+        }, 2000);
+      };
+    }
+
+    setTimeout(playCenterMedia, 5000);
+
+    document.body.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('orb')) {
+        popup.style.display = 'none';
+        // Re-enable pointer events on background video when popup is closed
+        bgVideo.style.pointerEvents = 'auto';
+      }
+    });
+  </script>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    const backButton = document.getElementById('backButton');
+    let currentOrb = null;
+
+    menuToggle.addEventListener('click', () => {
+      if (nav.style.display === 'flex') {
+        nav.style.display = 'none';
+      } else {
+        nav.style.display = 'flex';
+        nav.style.flexDirection = 'column';
+        nav.style.position = 'absolute';
+        nav.style.top = '70px';
+        nav.style.right = '20px';
+        nav.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        nav.style.padding = '1rem';
+        nav.style.borderRadius = '8px';
+        nav.style.zIndex = '1001';
+      }
+    });
+
+    backButton.addEventListener('click', () => {
+      if (currentOrb) {
+        popup.style.display = 'none';
+        backButton.style.display = 'none';
+        currentOrb.style.display = 'block';
+        currentOrb.style.transform = 'scale(1)';
+        currentOrb = null;
+      }
+    });
+
+    // Modify orb click handler to set currentOrb
+    const orbs = document.querySelectorAll('.orb');
+    orbs.forEach((orb) => {
+      orb.addEventListener('click', () => {
+        currentOrb = orb;
+      });
+    });
+  </script>
+</body>
+</html>

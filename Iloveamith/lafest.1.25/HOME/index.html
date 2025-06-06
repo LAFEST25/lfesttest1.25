@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HOME</title>
+  <link rel="stylesheet" href="styles1.css" />
+  <link rel="stylesheet" href="../common-navbar.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: rgb(3, 3, 3);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+    }
+    #desktop-iframe {
+      display: block;
+    }
+    #mobile-iframe {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      z-index: 9999;
+    }
+    @media (max-width: 768px) {
+      #desktop-iframe {
+        display: none;
+      }
+      #mobile-iframe {
+        display: block;
+      }
+    }
+    #custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2000;
+      font-size: 24px;
+      color: white;
+      user-select: none;
+      transform: translate(-50%, -50%);
+    }
+    #register-button {
+      position: fixed;
+      bottom: 25px;
+      left: 93.5%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 170px;
+      height: 40px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div id="custom-cursor">+</div>
+<header class="apple-navbar">
+  <div class="notch">
+    <div class="logo">
+      <img src="../eventsv2.1/images/logo.png" alt="LA FEST Logo" />
+    </div>
+    <nav class="nav">
+      <a href="index.html">HOME</a>
+      <a href="../eventsv2.1/index.html">EVENTS</a>
+      <a href="../rules v2/index.html">RULES</a>
+      <a href="../legacy2/legacyindex.html">LEGACY</a>
+      <a href="../contacts v4/contacts_updated.html">CONTACTS</a>
+    </nav>
+    <div class="menu-toggle">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
+</header>
+  <script>
+    const menuToggle = document.querySelector('.apple-navbar .menu-toggle');
+    const nav = document.querySelector('.apple-navbar nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('show');
+    });
+  </script>
+  <iframe id="desktop-iframe" src='https://my.spline.design/prismcoin-QX0dWpy5FBnckvf0zgvUPFHC/' title="Spline 3D Application"></iframe>
+  <iframe id="mobile-iframe" src='https://my.spline.design/prismcoinmobile-niaUhTGvLCFKNWnFF6sq1Be2/' title="Spline 3D Application Mobile" frameborder='0' width='100%' height='100%'></iframe>
+  <script>
+    // Prevent context menu globally except on buttons
+    document.addEventListener('contextmenu', function (e) {
+      if (!e.target.closest('button')) {
+        e.preventDefault();
+      }
+    });
+    // Disable scroll and zoom (mouse wheel and touchpad)
+    window.addEventListener('wheel', function (e) {
+      e.preventDefault();
+    }, { passive: false });
+    // Disable zoom via Ctrl + Scroll
+    window.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) {
+        e.preventDefault();
+      }
+    });
+    // Disable pinch zoom on touch devices
+    window.addEventListener('touchmove', function (e) {
+      if (e.scale !== 1) e.preventDefault();
+    }, { passive: false });
+  </script>
+  <script>
+    // Custom cursor script
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    const links = document.querySelectorAll('nav a');
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.classList.add('hovered');
+      });
+      link.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hovered');
+      });
+    });
+  </script>
+  <button class="glow-button" id="register-button">Register</button>
+</body>
+</html>
