@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../common-navbar.css" />
   <style>
-       @font-face {
+    @font-face {
       font-family: 'ShadowHunter';
       src: url('MBF SHADOW HUNTER.ttf') format('truetype');
       font-display: swap;
@@ -21,6 +21,14 @@
       --text-black: #d6d6d6;
       
     }
+  @media (max-width: 600px) {
+  .card {
+    width: 90vw;
+    height: auto;
+    padding: 1.5rem;
+  }
+}
+
     
        /* Navbar styles */
     header {
@@ -158,7 +166,7 @@
       margin: 0;
       font-family: 'Tulpen One', cursive;
       background: var(--bg);
-      overflow: hidden;
+      overflow: auto;
       color: var(--text-black);
       -webkit-user-select: none; /* prevent selection during swipe */
       user-select: none;
@@ -180,29 +188,18 @@
     }
 
 .card p {
-font-family: 'Roboto', sans-serif;
-font-size: 1.4rem;
-max-width: 80%;
-margin-top: 0;
-margin-bottom: 1rem;
-line-height: 1.8;
-z-index: 1;
-user-select: text;
-}
-
-.card p {
-font-family: 'Roboto', sans-serif;
-font-size: 1.4rem;
-max-width: 80%;
-margin-top: 0;
-margin-bottom: 1rem;
-line-height: 1.8;
-z-index: 1;
-user-select: text;
-overflow-y: auto;
-max-height: 60vh;
-padding-right: 1rem;
-}
++      font-family: 'Roboto', sans-serif;
++      font-size: 1.4rem;
++      max-width: 80%;
++      margin-top: 0;
++      margin-bottom: 1rem;
++      line-height: 1.8;
++      z-index: 1;
++      user-select: text;
++      overflow-y: auto;
++      max-height: 60vh;
++      padding-right: 1rem;
++    }
     .card p {
       font-family: 'Roboto', sans-serif;
       font-size: 1.4rem;
@@ -213,7 +210,7 @@ padding-right: 1rem;
       z-index: 1;
       user-select: text;
     }
-
+=======
     .card p {
       font-family: 'Roboto', sans-serif;
       font-size: 1.4rem;
@@ -223,10 +220,11 @@ padding-right: 1rem;
       line-height: 1.8;
       z-index: 1;
       user-select: text;
-      overflow-y: hidden;
-      max-height: none;
+      overflow-y: auto;
+      max-height: 60vh;
       padding-right: 1rem;
     }
+
     .deck-container {
       position: relative;
       width: 100vw;
@@ -667,94 +665,91 @@ padding-right: 1rem;
 
     // Swipe gesture support for touch devices
     let touchStartX = 0;
-    let touchEndX = 0;
-    const swipeThreshold = 50; // px
-
     let touchStartY = 0;
-    let touchMoveX = 0;
-    let touchMoveY = 0;
-    let isVerticalScroll = false;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    const swipeThreshold = 50; // px
+    const verticalThreshold = 30; // px to distinguish vertical scroll from horizontal swipe
 
     window.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
-        isVerticalScroll = false;
       }
     });
 
     window.addEventListener('touchmove', (e) => {
       if (e.touches.length === 1) {
-        touchMoveX = e.touches[0].clientX;
-        touchMoveY = e.touches[0].clientY;
+        const touch = e.touches[0];
+        const touchCurrentX = touch.clientX;
+        const touchCurrentY = touch.clientY;
 
-        const deltaX = Math.abs(touchMoveX - touchStartX);
-        const deltaY = Math.abs(touchMoveY - touchStartY);
+        const deltaX = touchCurrentX - touchStartX;
+        const deltaY = touchCurrentY - touchStartY;
 
         const target = e.target;
 
-        if (deltaY > deltaX) {
-          isVerticalScroll = true;
-        }
-
-        // Only prevent default if horizontal swipe is greater than vertical swipe and inside card paragraph
-        if (target.closest('.card p') && deltaX > deltaY) {
+        // If inside .card p, allow vertical scroll but prevent horizontal swipe
+        if (target.closest('.card p')) {
+          if (Math.abs(deltaY) > Math.abs(deltaX)) {
+            // Vertical scroll - allow default behavior
+            // Do nothing
+          } else {
+            // Horizontal swipe - prevent default to enable swipe navigation
+            e.preventDefault();
+          }
+        } else {
+          // Outside .card p - prevent default to disable page scroll during swipe
           e.preventDefault();
         }
       }
     }, { passive: false });
 
     window.addEventListener('touchend', (e) => {
+      // Check if the tap target is a button or interactive element
       const target = e.target;
       if (target.closest('button, a, input, select, textarea')) {
+        // Let the button or interactive element handle the event
         touchStartX = 0;
-        touchEndX = 0;
         touchStartY = 0;
-        touchMoveX = 0;
-        touchMoveY = 0;
-        isVerticalScroll = false;
+        touchEndX = 0;
+        touchEndY = 0;
         return;
       }
 
-      const distX = touchMoveX - touchStartX;
-      const distY = touchMoveY - touchStartY;
-
-      if (isVerticalScroll) {
-        // If vertical scroll detected, do not trigger card navigation or tap navigation
-        touchStartX = 0;
-        touchEndX = 0;
-        touchStartY = 0;
-        touchMoveX = 0;
-        touchMoveY = 0;
-        isVerticalScroll = false;
-        return;
+      if (e.changedTouches.length === 1) {
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
       }
 
-      // Only trigger card navigation if horizontal swipe is greater than vertical swipe and exceeds threshold
-      // Added stricter check: horizontal distance must be at least twice vertical distance
-      if (Math.abs(distX) > swipeThreshold && Math.abs(distX) > 2 * Math.abs(distY)) {
+      const distX = touchEndX - touchStartX;
+      const distY = touchEndY - touchStartY;
+
+      if (Math.abs(distX) > swipeThreshold && Math.abs(distY) < verticalThreshold) {
         if (distX < 0) {
           nextCard();
         } else {
           prevCard();
         }
       } else {
-        // Tap navigation: detect tap position
+        // Tap navigation: detect tap position only if vertical movement is small
         const tapX = e.changedTouches[0].clientX;
         const screenWidth = window.innerWidth;
-        if (tapX > screenWidth * 0.4) {
-          nextCard();
-        } else {
-          prevCard();
+        const verticalMovement = Math.abs(touchEndY - touchStartY);
+        const tapVerticalThreshold = 20; // px
+
+        if (verticalMovement < tapVerticalThreshold) {
+          if (tapX > screenWidth * 0.4) {
+            nextCard();
+          } else {
+            prevCard();
+          }
         }
       }
-
       touchStartX = 0;
-      touchEndX = 0;
       touchStartY = 0;
-      touchMoveX = 0;
-      touchMoveY = 0;
-      isVerticalScroll = false;
+      touchEndX = 0;
+      touchEndY = 0;
     });
   </script>
 </body>
