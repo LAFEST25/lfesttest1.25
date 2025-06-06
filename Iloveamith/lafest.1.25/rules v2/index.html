@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../common-navbar.css" />
+  <style>
+       @font-face {
+      font-family: 'ShadowHunter';
+      src: url('MBF SHADOW HUNTER.ttf') format('truetype');
+      font-display: swap;
+    }
+    :root {
+      --glow: #5e048b;
+      --bg: #0d0d0d;
+      --glass: rgba(27, 27, 27, 0.589);
+      --text-black: #d6d6d6;
+      
+    }
+    
+       /* Navbar styles */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      box-sizing: border-box;
+      z-index: 10000;
+      border-bottom: 2px solid #a020f0;
+      box-shadow: 0 0 12px #a020f0;
+    }
+
+    /* Logo container */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .logo-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .small {
+      max-height: 50px;
+    }
+
+    .logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 2rem;
+      
+      color: #a020f0;
+      user-select: none;
+    }
+
+    /* Navigation */
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #a020f0;
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      position: relative;
+      padding: 5px 0;
+      user-select: none;
+    }
+
+    nav ul li a.active,
+    nav ul li a:hover {
+      color: #fff;
+    }
+
+    nav ul li a::after {
+      content: attr(data-hover);
+      position: absolute;
+      left: 0;
+      bottom: -25px;
+      color: #a020f0;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    nav ul li a:hover::after,
+    nav ul li a.active::after {
+      opacity: 1;
+    }
+
+    /* Menu toggle bars for mobile (hidden, since no script given) */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background: #a020f0;
+      border-radius: 3px;
+    }
+
+    /* Social icons container (placeholder) */
+    .socials {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icon {
+      color: #a020f0;
+      font-size: 1.3rem;
+      text-decoration: none;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: #fff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Tulpen One', cursive;
+      background: var(--bg);
+      overflow: hidden;
+      color: var(--text-black);
+      -webkit-user-select: none; /* prevent selection during swipe */
+      user-select: none;
+      touch-action: pan-y; /* allow vertical scroll but not horizontal */
+    }
+
+    .card p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.4rem;
+      max-width: 80%;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      z-index: 1;
+      user-select: text;
+      overflow-y: auto;
+      max-height: 60vh;
+      padding-right: 1rem;
+    }
+SEARCH
++<<<<<<< SEARCH
++    .card p {
++      font-family: 'Roboto', sans-serif;
++      font-size: 1.4rem;
++      max-width: 80%;
++      margin-top: 0;
++      margin-bottom: 1rem;
++      line-height: 1.8;
++      z-index: 1;
++      user-select: text;
++    }
++=======
++    .card p {
++      font-family: 'Roboto', sans-serif;
++      font-size: 1.4rem;
++      max-width: 80%;
++      margin-top: 0;
++      margin-bottom: 1rem;
++      line-height: 1.8;
++      z-index: 1;
++      user-select: text;
++      overflow-y: auto;
++      max-height: 60vh;
++      padding-right: 1rem;
++    }
+    .card p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.4rem;
+      max-width: 80%;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      z-index: 1;
+      user-select: text;
+    }
+=======
+    .card p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.4rem;
+      max-width: 80%;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      z-index: 1;
+      user-select: text;
+      overflow-y: hidden;
+      max-height: none;
+      padding-right: 1rem;
+    }
+    .deck-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+      overflow: visible;
+    }
+
+    .card {
+      position: absolute;
+      width: 70vw;
+      height: 80vh;
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-black);
+      border: 2px solid transparent;
+      box-shadow: 0 0 0px var(--glow);
+      transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+      will-change: transform;
+      padding: 2rem;
+      box-sizing: border-box;
+      user-select: none;
+      cursor: default;
+      touch-action: pan-y;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 0;
+      animation: glow-border 2s infinite;
+      border: 2px solid var(--glow);
+      box-sizing: border-box;
+    }
+
+    @keyframes glow-border {
+      0%, 100% {
+        box-shadow: 0 0 5px var(--glow), 0 0 10px var(--glow);
+      }
+      50% {
+        box-shadow: 0 0 15px var(--glow), 0 0 30px var(--glow);
+      }
+    }
+
+    .card h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      z-index: 1;
+      user-select: text;
+    }
+
+    .card p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.4rem;
+      max-width: 80%;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      z-index: 1;
+      user-select: text;
+    }
+
+    .index-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      z-index: 1;
+    }
+
+    .index-buttons button {
+      background: rgba(94, 4, 139, 0.6);
+      border: 2px solid var(--glow);
+      color: #d3d3d3;
+      padding: 0.5rem 1.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      animation: pulseGlow 2s infinite;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+
+    .index-buttons button:hover {
+      transform: scale(1.1);
+      background: var(--glow);
+      color: #fff;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 8px var(--glow), 0 0 12px var(--glow);
+      }
+      50% {
+        box-shadow: 0 0 16px var(--glow), 0 0 32px var(--glow);
+      }
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 30px;
+      text-align: center;
+      z-index: 10;
+      width: 100%;
+      user-select: none;
+    }
+
+    .controls button {
+      background: var(--glow);
+      color: #d3d3d3;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 0 1rem;
+      border-radius: 5px;
+      user-select: none;
+    }
+
+    .index-return {
+      margin-top: 2rem;
+      background: var(--glow);
+      border: 2px solid var(--glow);
+      color: #d3d3d3;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      width: fit-content;
+      align-self: center;
+      animation: pulseGlow 2s infinite;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .index-return:hover {
+      background: var(--glow);
+      color: #fff;
+    }
+  </style>
+</head>
+<!-- Header -->
+<header class="apple-navbar">
+  <div class="notch">
+    <div class="logo">
+      <img src="../eventsv2.1/images/logo.png" alt="LA FEST Logo" />
+    </div>
+    <nav>
+      <a href="../HOME/index.html">HOME</a>
+      <a href="../eventsv2.1/index.html">EVENTS</a>
+      <a href="index.html" class="active">RULES</a>
+      <a href="../legacy2/legacyindex.html">LEGACY</a>
+      <a href="../contacts v4/contacts_updated.html">CONTACTS</a>
+    </nav>
+  </div>
+</header>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      if (nav.style.display === 'flex') {
+        nav.style.display = 'none';
+      } else {
+        nav.style.display = 'flex';
+        nav.style.flexDirection = 'column';
+        nav.style.position = 'absolute';
+        nav.style.top = '70px';
+        nav.style.right = '20px';
+        nav.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        nav.style.padding = '1rem';
+        nav.style.borderRadius = '8px';
+        nav.style.zIndex = '1001';
+      }
+    });
+  </script>
+  <body>
+  <div class="deck-container" id="deck">
+    <div class="card"><h1>RULES</h1></div>
+    <div class="card">
+      <h1>INDEX</h1>
+      <p>Tap to jump to a rule</p>
+      <div class="index-buttons">
+        <button onclick="goToCard(2)">GENERAL RULES</button>
+        <button onclick="goToCard(3)">HARMONY</button>
+        <button onclick="goToCard(4)">DANCE O' MANIA</button>
+        <button onclick="goToCard(5)">BLOCK N' TANGLES</button>
+        <button onclick="goToCard(6)">LA PERSONA</button>
+        <button onclick="goToCard(7)">L'EBATE</button>
+        <button onclick="goToCard(8)">ENQUESTA</button>
+        <button onclick="goToCard(9)">L'USION</button>
+      </div>
+    </div>
+    <div class="card">
+      <h1>GENERAL RULES</h1>
+      <p>1. Registration is free of cost and open exclusively to students of Classes IX to XII from participating schools.<br>
+        2. All completed registration forms should be submitted by 20th June,2025.<br>
+        3. All participants should report by 7:00 am on the day of the fest.<br>
+        4. Each school may bring a maximum of 50 non-participating attendees.<br>
+        5. Each registered school is required to participate in a minimum of three events. Individual students may not participate in more than two events.<br>
+        6. All attendees must wear their school uniforms and display their LA Fest badges at all times, regardless of their participation status. Badges will be issued at the registration desk.<br>
+        7. Entry is restricted to registered students and their accompanying teachers only.<br>
+        8. Each school will be allotted two green rooms for preparation and storage.<br>
+        9. Food coupons, priced at 350 each, are non-refundable.<br>
+        10. All orders, including vegetarian/non-vegetarian preferences, must be confirmed by 20th June,2025.<br>
+        Changes will not be entertained beyond this deadline.<br>
+        11. While students may carry mobile phones, usage is strictly prohibited inside the indoor stadium.<br>
+        12. Food and beverages are not allowed inside the indoor stadium under any circumstances.<br>
+        13. All decisions made by the judges will be final.<br>
+        14. Participating schools are expected to uphold the highest standards of sportsmanship and fair play. Any form of vulgar language, obscene actions, or disruptive behaviour will result in immediate disqualification.</p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>HARMONY</h1>
+      <p>
+        1. Each team must have a minimum of five members, and a maximum of ten.<br>
+        2. Teams will have three minutes for stage setup and seven minutes for performance.<br>
+        3. Each team must include at least three instruments and not more than four vocalists.<br>
+        4. All genres of music are permitted, except devotional, patriotic, and classical.<br>
+        5. Instruments must be tuned before reaching the school.<br>
+        6. The use of pre-recorded MIDI files, rhythm boxes, karaoke tracks, or drum pads is strictly prohibited.<br>
+        7. Shoulder synthesisers and USB-MIDI controllers are allowed, as long as they do not include pre-recorded MIDI loops.<br>
+        8. The venue will provide the following:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• A standard drum kit<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Two keyboard stands<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Five microphones<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Six output connections<br>
+        9. Participants must bring any additional instruments and accessories they may need, such as guitar pedals, cables and drumsticks.<br>
+        10. Amplifiers will be available upon request.<br>
+        11. Vulgarity in lyrics will lead to deduction of points.
+      </p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>DANCE O' MANIA</h1>
+      <p>1. Each school may send only one team, of 8 to 16 participants; their performance must not exceed 8 minutes.<br>
+        2. Teams are free to choose any soundtrack or song for their performance, but the selected soundtrack must be submitted to the event heads via the phone numbers provided on the website at least two days prior to the event.<br>
+        3. The use of party poppers, explosive items, powdery substances and water or any liquid on stage is strictly prohibited.<br>
+        4. USB drives are mandatory and must be brought by the participants and handed over to the event heads on the day of the fest.<br>
+        5. Special lighting effects will not be provided. Obscenity or vulgarity, in either lyrics or actions, will lead to immediate disqualification.<br>
+        6. All performance sequences must take place entirely on stage.<br>
+        7. If a team chooses to present a theme, it must be clearly conveyed to both the judges and the audience. Judges' decisions are final and binding.<br>
+        8. Participants are encouraged to use small, manageable props, which must be carried and handled by the performers themselves.<br>
+        9. All props must be cleared from the stage immediately after the performance.<br>
+        10. While ushers may assist, teams are solely responsible for managing their own props.<br>
+        11. Failure to comply with Rules 2,3 and 4 will result in deduction of points.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>BLOCK N' TANGLES</h1>
+      <p> 1. Each school may send no more than two teams, each consisting of two members.<br>
+        2. There will be two off-stage rounds: the first is a written round that will shortlist teams for the second, a group discussion round.<br>
+        3. Four teams will qualify for the final on-stage round.<br>
+        4. The on-stage round will comprise multiple sub-rounds, the details of which will be revealed on the day of the event.<br>
+        5. The judges' decisions will be final.<br>
+        6. Vulgarity or obscenity in speech or actions will lead to disqualification.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>LA PERSONA</h1>
+      <p>1. Each school may nominate a maximum of four contestants to participate in this event.<br>
+        2. The event comprises three rounds:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Glance - Written round<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Gaze - Interview round<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• The Unveil - Final onstage round<br>
+        3. All participants are expected to show up in modest attire.<br>
+        4. Strict adherence to time limits for each segment is mandatory. Any deviation may result in penalties, including point deductions.<br>
+        5. Any form of vulgarity, obscenity, or the use of unparliamentary language is strictly prohibited. Such infractions will result in immediate point deductions or potential disqualification.<br>
+        6. The judges' decision will be final and irrevocable.<br>
+        7. La Persona will crown only one winner.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>L'EBATE</h1>
+      <p>1. Each school may send a team comprising two members.<br>
+        2. Performance in the prelims will determine entry into the semi-finals and finals.<br>
+        3. Prelims rules: Speakers will be allowed one minute to deliver their points, after which the opposition can ask questions for a maximum of two minutes. A maximum of three questions is allowed.<br>
+        4. Finals rules: The finals will be centred around a moot court scenario. Participants will not be allowed to change their stand during the debate.<br>
+        5. During the rebuttal session, the speaker is not allowed to seek the help of his teammate, and cross-questioning is not allowed. No new arguments may be introduced in the rebuttal period.<br>
+        6. Details regarding the semi-finals and finals will be provided on the day of the event.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>ENQUESTA</h1>
+      <p>1. Each school may register up to six teams for the preliminary round.<br>
+        2. Each team must consist of only two members.<br>
+        3. The prelims will feature twenty questions to determine the finalists.<br>
+        4. Only one team per school can qualify for the finals.<br>
+        5. In case of a tie, starred questions will be used as tiebreakers.<br>
+        6. The top six teams will advance to the final round.<br>
+        7. The finals may include question formats such as Pounce and Bounce, Buzzer, or Rapid Fire.<br>
+        8. The quizmasters' decision is final.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+    <div class="card">
+      <h1>L'USION</h1>
+      <p> 1. Each school may send only one team comprising 5 members.<br>
+        2. Use of electronic gadgets is strictly prohibited throughout the event.<br>
+        3. Participants must bring only shading pencils, markers, pen/pencil and other stationery items required for write-ups and sketches.<br>
+        4. Each team's work must be completed and submitted within the allocated time frame for each round.<br>
+        5. The event consists of three rounds:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Written Elimination Round - Only the top four schools will advance.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Concept Creation and Presentation Round - Points earned in this round will be added to the final tally, showcasing your idea, whether it's a product, service, or any other form of innovation.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• Branding Round.<br>
+        6. The decisions made by the judges are final.<br></p>
+      <button class="index-return" onclick="goToCard(1)">← Back to Index</button>
+    </div>
+   
+  </div>
+
+  <div class="controls">
+    <button onclick="prevCard()">Previous</button>
+    <button onclick="nextCard()">Next</button>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    let current = 0;
+
+    const prevButton = document.querySelector('.controls button:nth-child(1)');
+    const nextButton = document.querySelector('.controls button:nth-child(2)');
+
+    // Update deck layout for visible cards like a deck of cards
+    function updateDeck() {
+      cards.forEach((card, i) => {
+        const offset = i - current;
+        card.style.transform = `translateX(${offset * 30}px) scale(${1 - Math.abs(offset) * 0.05}) translateZ(${-Math.abs(offset) * 30}px)`;
+        card.style.opacity = offset < -3 || offset > 3 ? '0' : '1';
+        card.style.zIndex = 100 - Math.abs(offset);
+      });
+
+      // Disable/enable buttons based on current index
+      if (current === 0) {
+        prevButton.disabled = true;
+        prevButton.style.opacity = '0.5';
+        prevButton.style.cursor = 'default';
+      } else {
+        prevButton.disabled = false;
+        prevButton.style.opacity = '1';
+        prevButton.style.cursor = 'pointer';
+      }
+
+      if (current === cards.length - 1) {
+        nextButton.disabled = true;
+        nextButton.style.opacity = '0.5';
+        nextButton.style.cursor = 'default';
+      } else {
+        nextButton.disabled = false;
+        nextButton.style.opacity = '1';
+        nextButton.style.cursor = 'pointer';
+      }
+    }
+
+    // Navigation functions
+    function nextCard() {
+      if (current < cards.length - 1) {
+        current++;
+        updateDeck();
+      }
+    }
+
+    function prevCard() {
+      if (current > 0) {
+        current--;
+        updateDeck();
+      }
+    }
+
+    function goToCard(index) {
+      if (index >= 0 && index < cards.length) {
+        current = index;
+        updateDeck();
+      }
+    }
+
+    updateDeck();
+
+    // Scroll wheel support - throttle to prevent fast jumps
+    let scrollTimeout;
+    window.addEventListener('wheel', (e) => {
+      // Traverse up the DOM tree to find the closest scrollable container
+      let el = e.target;
+      while (el && el !== document.body) {
+        const style = window.getComputedStyle(el);
+        const overflowY = style.getPropertyValue('overflow-y');
+        const isScrollable = (overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+        if (isScrollable) {
+          const canScrollDown = el.scrollTop + el.clientHeight < el.scrollHeight;
+          const canScrollUp = el.scrollTop > 0;
+          if (e.deltaY > 0 && canScrollDown) {
+            // Allow scrolling inside the container, do not turn page
+            return;
+          }
+          if (e.deltaY < 0 && canScrollUp) {
+            // Allow scrolling inside the container, do not turn page
+            return;
+          }
+        }
+        el = el.parentElement;
+      }
+      e.preventDefault();
+      if (scrollTimeout) return;
+      if (Math.abs(e.deltaY) < 30) return; // Adjusted threshold to increase scroll sensitivity a bit
+      if (e.deltaY > 0) nextCard();
+      else if (e.deltaY < 0) prevCard();
+      scrollTimeout = setTimeout(() => scrollTimeout = null, 300);
+    }, { passive: false });
+
+    // Keyboard navigation for left and right arrow keys
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.code === 'ArrowRight') {
+        nextCard();
+      } else if (e.key === 'ArrowLeft' || e.code === 'ArrowLeft') {
+        prevCard();
+      }
+    });
+
+    // Disable dragging on the webpage
+    window.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+    });
+
+    // Swipe gesture support for touch devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 50; // px
+
+    let touchStartY = 0;
+    let touchMoveX = 0;
+    let touchMoveY = 0;
+    let isVerticalScroll = false;
+
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isVerticalScroll = false;
+      }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1) {
+        touchMoveX = e.touches[0].clientX;
+        touchMoveY = e.touches[0].clientY;
+
+        const deltaX = Math.abs(touchMoveX - touchStartX);
+        const deltaY = Math.abs(touchMoveY - touchStartY);
+
+        const target = e.target;
+
+        if (deltaY > deltaX) {
+          isVerticalScroll = true;
+        }
+
+        // Only prevent default if horizontal swipe is greater than vertical swipe and inside card paragraph
+        if (target.closest('.card p') && deltaX > deltaY) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false });
+
+    window.addEventListener('touchend', (e) => {
+      const target = e.target;
+      if (target.closest('button, a, input, select, textarea')) {
+        touchStartX = 0;
+        touchEndX = 0;
+        touchStartY = 0;
+        touchMoveX = 0;
+        touchMoveY = 0;
+        isVerticalScroll = false;
+        return;
+      }
+
+      const distX = touchMoveX - touchStartX;
+      const distY = touchMoveY - touchStartY;
+
+      if (isVerticalScroll) {
+        // If vertical scroll detected, do not trigger card navigation or tap navigation
+        touchStartX = 0;
+        touchEndX = 0;
+        touchStartY = 0;
+        touchMoveX = 0;
+        touchMoveY = 0;
+        isVerticalScroll = false;
+        return;
+      }
+
+      // Only trigger card navigation if horizontal swipe is greater than vertical swipe and exceeds threshold
+      // Added stricter check: horizontal distance must be at least twice vertical distance
+      if (Math.abs(distX) > swipeThreshold && Math.abs(distX) > 2 * Math.abs(distY)) {
+        if (distX < 0) {
+          nextCard();
+        } else {
+          prevCard();
+        }
+      } else {
+        // Tap navigation: detect tap position
+        const tapX = e.changedTouches[0].clientX;
+        const screenWidth = window.innerWidth;
+        if (tapX > screenWidth * 0.4) {
+          nextCard();
+        } else {
+          prevCard();
+        }
+      }
+
+      touchStartX = 0;
+      touchEndX = 0;
+      touchStartY = 0;
+      touchMoveX = 0;
+      touchMoveY = 0;
+      isVerticalScroll = false;
+    });
+  </script>
+</body>
+</html>
