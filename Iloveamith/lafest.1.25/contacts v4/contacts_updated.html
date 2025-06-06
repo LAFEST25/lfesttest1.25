@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../common-navbar.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -10000;
+      object-fit: cover;
+    }
+
+    .top-bar {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+      gap: 2rem;
+    }
+    .top-bar .logo {
+      position: absolute;
+      left: 2rem;
+    }
+
+    .top-bar .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .nav a:hover {
+      color: #9900ff;
+    }
+
+    .container {
+      margin-top: 120px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      position: relative;
+      z-index: 210000;
+      color: white;
+      text-shadow: 0 0 10px rgba(0,0,0,0.9);
+      flex: 1 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        margin-top: 100px;
+      }
+      .notch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.15);
+        padding: 1rem;
+        border-radius: 8px;
+      }
+      .notch .logo {
+        position: static;
+        margin-bottom: 1rem;
+      }
+      .notch nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        text-align: center;
+      }
+      .notch nav a {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        margin-top: 100px;
+      }
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 20px rgba(153, 0, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-card h3 {
+      margin: 0 0 0.5rem;
+      color: #9900ff;
+    }
+
+    .glass-card p {
+      margin: 0.2rem 0;
+    }
+  </style>
+  <style>
+    .copy-btn {
+      background-color: #9900ff;
+      border: none;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      margin-left: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background-color 0.3s;
+    }
+    .copy-btn:hover {
+      background-color: #7a00cc;
+    }
+    </style>
+  </head>
+  <body>
+    <style>
+      .video-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: -1;
+        pointer-events: none;
+      }
+    </style>
+    <video autoplay muted playsinline class="bg-video" id="bgVideo1" controlsList="nodownload nofullscreen noremoteplayback" disableRemotePlayback>
+      <source src="playfirst.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <video muted playsinline class="bg-video" id="bgVideo2" loop controlsList="nodownload nofullscreen noremoteplayback" disableRemotePlayback style="display:none;">
+      <source src="loopforever.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="video-overlay"></div>
+
+  
+  <script>
+    const video1 = document.getElementById('bgVideo1');
+    const video2 = document.getElementById('bgVideo2');
+
+    video1.addEventListener('ended', () => {
+      // Hide first video and show second video immediately for seamless loop
+      video1.style.display = 'none';
+      video2.style.display = 'block';
+      video2.play();
+    });
+
+    function copyToClipboard(text, button) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard: ' + text);
+        // Visual feedback: enlarge and shade green
+        const p = button.parentElement;
+        p.classList.add('copied');
+        setTimeout(() => {
+          p.classList.remove('copied');
+        }, 1000);
+      }).catch(err => {
+        alert('Failed to copy text: ' + err);
+      });
+    }
+  </script>
+  <style>
+    .copied {
+      transform: scale(1.2);
+      color: #4CAF50;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+  </style>
+
+<header class="apple-navbar">
+  <div class="notch">
+    <div class="logo">
+      <img src="../eventsv2.1/images/logo.png" alt="LA FEST Logo" />
+    </div>
+    <nav>
+      <a href="../HOME/index.html">HOME</a>
+      <a href="../eventsv2.1/index.html">EVENTS</a>
+      <a href="../rules v2/index.html">RULES</a>
+      <a href="../legacy2/legacyindex.html">LEGACY</a>
+      <a href="contacts_updated.html">CONTACTS</a>
+    </nav>
+  </div>
+</header>
+<script>
+</script>
+
+  <div class="container">
+    <!-- First 6 contacts -->
+    <div class="glass-card larger">
+      <h3>DIRECTOR & PRINCIPAL</h3>
+      <p>Fr Dr SALVIN AUGUSTINE SJ</p>
+      <p>
+        +91 9544115903
+        <button class="copy-btn" onclick="copyToClipboard('34565656', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card larger">
+      <h3>PRINCIPAL (CBSE)</h3>
+      <p>Fr RAMLAT THOMAS SJ</p>
+      <p>
+        +91 9497736577
+        <button class="copy-btn" onclick="copyToClipboard('5676766', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card larger">
+      <h3>PRINCIPAL(HSE)</h3>
+      <p>Sr JIJI THOMAS</p>
+      <p>
+        +91 9496221898
+        <button class="copy-btn" onclick="copyToClipboard('566567', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>GENERAL COORDINATOR</h3>
+      <p>SEAN NICHOLAS NEIL</p>
+      <p>
+        +91 97782 09569
+        <button class="copy-btn" onclick="copyToClipboard('+91 97782 09569', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>ASSISTANT GENERAL COORDINATOR</h3>
+      <p>VAIGA RAJMOHAN </p>
+      <p>
+        91 6282 477 237
+        <button class="copy-btn" onclick="copyToClipboard('+91 83308 38840', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>ASSISTANT GENERAL COORDINATOR</h3>
+      <p>DEA ANN SHINS</p>
+      <p>
+        +91 8921802149
+        <button class="copy-btn" onclick="copyToClipboard('+91 83308 38840', this)">Copy</button>
+      </p>
+    </div>
+    
+    <div class="glass-card">
+      <h3>EVENTS COORDINATOR</h3>
+      <p>ARYAN A</p>
+      <p>
+        +91 97788 00590
+        <button class="copy-btn" onclick="copyToClipboard('+91 97788 00590', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>ASSISTANT EVENTS COORDINATOR</h3>
+      <p>ANAIDA SANOJ</p>
+      <p>
+        +91 6238305051
+        <button class="copy-btn" onclick="copyToClipboard('+91 97788 00590', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>LOGISTICS COORDINATOR</h3>
+      <p>JOSHVIN THOMAS</p>
+      <p>
+        +91 77364 80329
+        <button class="copy-btn" onclick="copyToClipboard('+91 77364 80329', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>HARMONY</h3>
+      <p>SIVANAYAN D S</p>
+      <p>
+        +91 85907 03001
+        <button class="copy-btn" onclick="copyToClipboard('+91 85907 03001', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>DANCE O'MANIA</h3>
+      <p>FARESS AFSHEEN</p>
+      <p>
+        +91 97395 83162
+        <button class="copy-btn" onclick="copyToClipboard('+91 97395 83162', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>BLOCK N' TANGLES</h3>
+      <p>AKSHAY RAJESH</p>
+      <p>
+        +91 83300 40581
+        <button class="copy-btn" onclick="copyToClipboard('+91 83300 40581', this)">Copy</button>
+      </p>
+    </div>
+
+    <!-- Remaining 7 contacts -->
+    <div class="glass-card">
+      <h3>L'EBATE</h3>
+      <p>REYA S NAIR</p>
+      <p>
+        +91 96334 29633
+        <button class="copy-btn" onclick="copyToClipboard('+91 96334 29633', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>LA PERSONA</h3>
+      <p>AAMIR AHMED</p>
+      <p>
+        +91 94464 64777
+        <button class="copy-btn" onclick="copyToClipboard('+91 94464 64777', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>ENQUESTA</h3>
+      <p>ATUL P</p>
+      <p>
+        +91 80751 73951
+        <button class="copy-btn" onclick="copyToClipboard('+91 80751 73951', this)">Copy</button>
+      </p>
+    </div>
+    <div class="glass-card">
+      <h3>L'USION</h3>
+      <p>ALFRED CLIFFORD</p>
+      <p>
+        +91 83308 38840
+        <button class="copy-btn" onclick="copyToClipboard('+91 83308 38840', this)">Copy</button>
+      </p>
+    </div>
+    
+  </div>
+  <div class="credit-section glass-card">
+    <h3>Website & Media Credits</h3>
+    <p> Website : </p> 
+    <p>Aaryan S  ,  Arundev SR </p>
+    <p></p>
+    <button id="mediaDropdownBtn" class="dropdown-btn">Show/Hide Media Credits ▼</button>
+    <div id="mediaDropdownContent" class="dropdown-content" style="display:none; margin-top: 0.5rem;">
+      <p>Aashman Menon</p>
+      <p>Adwaith Madhav</p>
+      <p>Amith Nishel Tharakan</p>
+      <p>Amogh Deepak</p>
+      <p>Nakul B L</p>
+      <p>Sidharth Sebin Roy</p>
+      <p>Reanne Treesa</p>
+      <p>Vismay Vaisakh</p>
+      
+    </div>
+  </div>
+  <style>
+    .dropdown-btn {
+      background: transparent;
+      border: none;
+      color: #9900ff;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      user-select: none;
+    }
+    .dropdown-btn:hover {
+      color: rgb(156, 156, 156);
+    }
+    .dropdown-content p {
+      margin: 0.2rem 0;
+      cursor: default;
+    }
+  </style>
+  <script>
+    const mediaDropdownBtn = document.getElementById('mediaDropdownBtn');
+    const mediaDropdownContent = document.getElementById('mediaDropdownContent');
+    mediaDropdownBtn.addEventListener('click', () => {
+      if (mediaDropdownContent.style.display === 'none') {
+        mediaDropdownContent.style.display = 'block';
+      } else {
+        mediaDropdownContent.style.display = 'none';
+      }
+    });
+  </script>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      if (nav.style.display === 'flex') {
+        nav.style.display = 'none';
+      } else {
+        nav.style.display = 'flex';
+        nav.style.flexDirection = 'column';
+        nav.style.position = 'absolute';
+        nav.style.top = '70px';
+        nav.style.right = '20px';
+        nav.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        nav.style.padding = '1rem';
+        nav.style.borderRadius = '8px';
+        nav.style.zIndex = '1001';
+      }
+    });
+  </script>
+  <footer style="text-align:center; padding: 1rem 0; color: white; font-family: 'Orbitron', sans-serif; font-weight: 500; background: rgba(0, 0, 0, 0.6); width: 100%; z-index: 5;">
+   &copy; ALL RIGHTS RESERVED MEDIA TEAM '26
+  </footer>
+</body>
+</html>
