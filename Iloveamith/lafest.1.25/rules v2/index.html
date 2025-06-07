@@ -671,11 +671,11 @@
         // Check if horizontal swipe is greater than vertical swipe and threshold
         if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
           if (diffX > 0) {
-            // Swipe right - go to next card
-            nextCard();
-          } else {
-            // Swipe left - go to previous card
+            // Swipe right - go to previous card (inverted)
             prevCard();
+          } else {
+            // Swipe left - go to next card (inverted)
+            nextCard();
           }
         }
 
