@@ -36,6 +36,12 @@ body {
   box-shadow: 0 0 100px rgba(0, 0, 0, .3);
 }
 
+.card {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
 .book {
   width: 100%;
   height: 100%;
