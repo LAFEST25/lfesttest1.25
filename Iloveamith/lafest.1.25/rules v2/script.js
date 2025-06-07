@@ -1,6 +1,7 @@
 const tvScreen = document.getElementById('tv-screen');
 const screenOff = document.getElementById('screen-off');
 
+
 let isOn = false;
 
 const rules = [
@@ -24,16 +25,21 @@ const eventNames = [
   ""
 ];
 
+let currentRuleIndex = null;
+
 function togglePower() {
   isOn = !isOn;
   if (isOn) {
     loadEventBoxes();
+    addSwipeListeners();
   } else {
     tvScreen.innerHTML = '<div class="screen-off" id="screen-off">TV OFF</div>';
+    removeSwipeListeners();
   }
 }
 
 function loadEventBoxes() {
+  currentRuleIndex = null;
   tvScreen.innerHTML = '';
 
   const grid = document.createElement('div');
@@ -80,15 +86,10 @@ function loadEventBoxes() {
 }
 
 function showRule(index) {
-  const rule = rules[index];
-  const view = document.createElement('div');
-  view.className = 'rule-view dm-serif-display-regular';
-  view.innerHTML = `<h2>${eventNames[index] || `Event ${index + 1}`} Rules</h2><p>${rule}</p>`;
-  tvScreen.innerHTML = '';
-  tvScreen.appendChild(view);
-}
-
-function showRule(index) {
+  if (index < 0 || index >= rules.length) {
+    return; // Out of bounds, do nothing
+  }
+  currentRuleIndex = index;
   const rule = rules[index];
   const view = document.createElement('div');
   view.className = 'rule-view dm-serif-display-regular';
@@ -99,4 +100,53 @@ function showRule(index) {
 
 function goHome() {
   if (isOn) loadEventBoxes();
+}
+
+let touchStartX = null;
+let touchStartY = null;
+
+function handleTouchStart(event) {
+  const touch = event.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}
+
+function handleTouchEnd(event) {
+  if (touchStartX === null || touchStartY === null) {
+    return;
+  }
+  const touch = event.changedTouches[0];
+  const touchEndX = touch.clientX;
+  const touchEndY = touch.clientY;
+
+  const diffX = touchEndX - touchStartX;
+  const diffY = touchEndY - touchStartY;
+
+  // Check if horizontal swipe is greater than vertical swipe and threshold
+  if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+    if (diffX > 0) {
+      // Swipe right - show next card
+      if (currentRuleIndex !== null) {
+        showRule(currentRuleIndex + 1);
+      }
+    } else {
+      // Swipe left - show previous card
+      if (currentRuleIndex !== null) {
+        showRule(currentRuleIndex - 1);
+      }
+    }
+  }
+
+  touchStartX = null;
+  touchStartY = null;
+}
+
+function addSwipeListeners() {
+  tvScreen.addEventListener('touchstart', handleTouchStart, false);
+  tvScreen.addEventListener('touchend', handleTouchEnd, false);
+}
+
+function removeSwipeListeners() {
+  tvScreen.removeEventListener('touchstart', handleTouchStart, false);
+  tvScreen.removeEventListener('touchend', handleTouchEnd, false);
 }
