@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>EVENTS</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -23,12 +23,30 @@
     }
   @media (max-width: 600px) {
   .card {
-    width: 90vw;
-    height: auto;
-    padding: 1.5rem;
+    width: 95vw;
+    height: 80vh;
+    padding: .5rem;
+    overflow: hidden;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    overflow-y: auto;
+    max-height: 65vh;
+    padding-right: 1rem;
+    scrollbar-width: thin; /* for Firefox */
+  }
+
+  /* Optional: make mobile scrollbars visible and styled (for WebKit) */
+  .card p::-webkit-scrollbar {
+    width: 6px;
+  }
+  .card p::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
   }
 }
-
     
        /* Navbar styles */
     header {
@@ -170,60 +188,10 @@
       color: var(--text-black);
       -webkit-user-select: none; /* prevent selection during swipe */
       user-select: none;
-      touch-action: pan-y; /* allow vertical scroll but not horizontal */
+       /* allow vertical scroll but not horizontal */
     }
 
-    .card p {
-      font-family: 'Roboto', sans-serif;
-      font-size: 1.4rem;
-      max-width: 80%;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      line-height: 1.8;
-      z-index: 1;
-      user-select: text;
-      overflow-y: auto;
-      max-height: 60vh;
-      padding-right: 1rem;
-    }
-
-.card p {
-+      font-family: 'Roboto', sans-serif;
-+      font-size: 1.4rem;
-+      max-width: 80%;
-+      margin-top: 0;
-+      margin-bottom: 1rem;
-+      line-height: 1.8;
-+      z-index: 1;
-+      user-select: text;
-+      overflow-y: auto;
-+      max-height: 60vh;
-+      padding-right: 1rem;
-+    }
-    .card p {
-      font-family: 'Roboto', sans-serif;
-      font-size: 1.4rem;
-      max-width: 80%;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      line-height: 1.8;
-      z-index: 1;
-      user-select: text;
-    }
-=======
-    .card p {
-      font-family: 'Roboto', sans-serif;
-      font-size: 1.4rem;
-      max-width: 80%;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      line-height: 1.8;
-      z-index: 1;
-      user-select: text;
-      overflow-y: auto;
-      max-height: 60vh;
-      padding-right: 1rem;
-    }
+    
 
     .deck-container {
       position: relative;
@@ -233,7 +201,7 @@
       justify-content: center;
       align-items: center;
       perspective: 1200px;
-      overflow: visible;
+      overflow: hidden;
     }
 
     .card {
@@ -247,18 +215,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      
       justify-content: center;
-      text-align: center;
+      text-align: left;
       color: var(--text-black);
       border: 2px solid transparent;
       box-shadow: 0 0 0px var(--glow);
       transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
       will-change: transform;
-      padding: 2rem;
+      padding: 1.5rem;
       box-sizing: border-box;
       user-select: none;
       cursor: default;
-      touch-action: pan-y;
+      
     }
 
     .card::before {
@@ -291,13 +260,14 @@
 
     .card p {
       font-family: 'Roboto', sans-serif;
-      font-size: 1.4rem;
-      max-width: 80%;
+      font-size: 1.1rem;
+      max-width: 95%;
       margin-top: 0;
       margin-bottom: 1rem;
       line-height: 1.8;
       z-index: 1;
       user-select: text;
+
     }
 
     .index-buttons {
@@ -416,13 +386,26 @@
         nav.style.zIndex = '1001';
       }
     });
+
+    // Disable zooming via Ctrl + wheel and Ctrl + plus/minus keys
+    window.addEventListener('wheel', function(e) {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    window.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) {
+        e.preventDefault();
+      }
+    });
   </script>
   <body>
   <div class="deck-container" id="deck">
     <div class="card"><h1>RULES</h1></div>
     <div class="card">
       <h1>INDEX</h1>
-      <p>Tap to jump to a rule</p>
+      <p>Click to jump to a rule</p>
       <div class="index-buttons">
         <button onclick="goToCard(2)">GENERAL RULES</button>
         <button onclick="goToCard(3)">HARMONY</button>
@@ -663,94 +646,44 @@
       e.preventDefault();
     });
 
-    // Swipe gesture support for touch devices
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
-    const swipeThreshold = 50; // px
-    const verticalThreshold = 30; // px to distinguish vertical scroll from horizontal swipe
+    // Swipe gesture support for mobile on deck container
+    document.addEventListener('DOMContentLoaded', () => {
+      const deck = document.getElementById('deck');
+      let touchStartX = null;
+      let touchStartY = null;
 
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    });
-
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 1) {
+      deck.addEventListener('touchstart', (e) => {
         const touch = e.touches[0];
-        const touchCurrentX = touch.clientX;
-        const touchCurrentY = touch.clientY;
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      }, false);
 
-        const deltaX = touchCurrentX - touchStartX;
-        const deltaY = touchCurrentY - touchStartY;
+      deck.addEventListener('touchend', (e) => {
+        if (touchStartX === null || touchStartY === null) return;
 
-        const target = e.target;
+        const touch = e.changedTouches[0];
+        const touchEndX = touch.clientX;
+        const touchEndY = touch.clientY;
 
-        // If inside .card p, allow vertical scroll but prevent horizontal swipe
-        if (target.closest('.card p')) {
-          if (Math.abs(deltaY) > Math.abs(deltaX)) {
-            // Vertical scroll - allow default behavior
-            // Do nothing
-          } else {
-            // Horizontal swipe - prevent default to enable swipe navigation
-            e.preventDefault();
-          }
-        } else {
-          // Outside .card p - prevent default to disable page scroll during swipe
-          e.preventDefault();
-        }
-      }
-    }, { passive: false });
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
 
-    window.addEventListener('touchend', (e) => {
-      // Check if the tap target is a button or interactive element
-      const target = e.target;
-      if (target.closest('button, a, input, select, textarea')) {
-        // Let the button or interactive element handle the event
-        touchStartX = 0;
-        touchStartY = 0;
-        touchEndX = 0;
-        touchEndY = 0;
-        return;
-      }
-
-      if (e.changedTouches.length === 1) {
-        touchEndX = e.changedTouches[0].clientX;
-        touchEndY = e.changedTouches[0].clientY;
-      }
-
-      const distX = touchEndX - touchStartX;
-      const distY = touchEndY - touchStartY;
-
-      if (Math.abs(distX) > swipeThreshold && Math.abs(distY) < verticalThreshold) {
-        if (distX < 0) {
-          nextCard();
-        } else {
-          prevCard();
-        }
-      } else {
-        // Tap navigation: detect tap position only if vertical movement is small
-        const tapX = e.changedTouches[0].clientX;
-        const screenWidth = window.innerWidth;
-        const verticalMovement = Math.abs(touchEndY - touchStartY);
-        const tapVerticalThreshold = 20; // px
-
-        if (verticalMovement < tapVerticalThreshold) {
-          if (tapX > screenWidth * 0.4) {
+        // Check if horizontal swipe is greater than vertical swipe and threshold
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+          if (diffX > 0) {
+            // Swipe right - go to next card
             nextCard();
           } else {
+            // Swipe left - go to previous card
             prevCard();
           }
         }
-      }
-      touchStartX = 0;
-      touchStartY = 0;
-      touchEndX = 0;
-      touchEndY = 0;
+
+        touchStartX = null;
+        touchStartY = null;
+      }, false);
     });
+    
   </script>
 </body>
 </html>
